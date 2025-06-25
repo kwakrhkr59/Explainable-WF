@@ -1,0 +1,6 @@
+data/*
+history/*
+model/*
+results/*
+
+*.h5
