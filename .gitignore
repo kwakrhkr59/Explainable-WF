@@ -1,6 +1,6 @@
-data/*
-history/*
-model/*
-results/*
+*/data/*
+*/history/*
+*/model/*
+*/results/*
 
 *.h5
