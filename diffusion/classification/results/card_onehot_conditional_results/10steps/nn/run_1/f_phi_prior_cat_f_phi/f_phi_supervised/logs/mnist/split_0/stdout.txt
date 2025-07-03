@@ -1,0 +1,8 @@
+INFO - main.py - 2025-06-26 10:32:54,645 - Using device: cuda:7
+INFO - main.py - 2025-06-26 10:32:54,645 - Writing log file to ./results/card_onehot_conditional_results/10steps/nn/run_1/f_phi_prior_cat_f_phi/f_phi_supervised/logs/mnist/split_0
+INFO - main.py - 2025-06-26 10:32:54,645 - Exp instance id = 1325451
+INFO - main.py - 2025-06-26 10:32:54,645 - Exp comment = 
+INFO - card_classification.py - 2025-06-26 10:32:58,283 - 
+Before training, the guidance classifier accuracy on the test set is 0.09770000.
+
+

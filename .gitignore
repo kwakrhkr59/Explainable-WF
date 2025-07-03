@@ -1,6 +1,10 @@
 */data/*
+*/log/*
 */history/*
 */model/*
+*/models/*
 */results/*
+*/output/*
 
 *.h5
+*.npz

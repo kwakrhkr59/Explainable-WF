@@ -1,0 +1,31 @@
+INFO - main.py - 2025-06-26 11:24:40,224 - Using device: cuda:7
+INFO - main.py - 2025-06-26 11:24:40,225 - Writing log file to ./results/card_onehot_conditional_results/10steps/nn/run_1/f_phi_prior_cat_f_phi/f_phi_supervised/logs/firefox_fiber_2d/split_0
+INFO - main.py - 2025-06-26 11:24:40,225 - Exp instance id = 1345812
+INFO - main.py - 2025-06-26 11:24:40,225 - Exp comment = 
+ERROR - main.py - 2025-06-26 11:24:46,272 - Traceback (most recent call last):
+  File "/home/kwakrhkr59/XAI_WF/diffusion/classification/main.py", line 306, in main
+    runner.train()
+  File "/home/kwakrhkr59/XAI_WF/diffusion/classification/card_classification.py", line 182, in train
+    y_acc_aux_model = self.evaluate_guidance_model(test_loader)
+  File "/home/kwakrhkr59/XAI_WF/diffusion/classification/card_classification.py", line 139, in evaluate_guidance_model
+    y_pred_prob = self.compute_guiding_prediction(
+  File "/home/kwakrhkr59/XAI_WF/diffusion/classification/card_classification.py", line 126, in compute_guiding_prediction
+    y_pred = self.cond_pred_model(x)
+  File "/home/kwakrhkr59/anaconda3/envs/diff/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/kwakrhkr59/XAI_WF/diffusion/classification/pretraining/encoder.py", line 56, in forward
+    feature = self.forward_feature(x)
+  File "/home/kwakrhkr59/XAI_WF/diffusion/classification/pretraining/encoder.py", line 51, in forward_feature
+    x = self.f(x)
+  File "/home/kwakrhkr59/anaconda3/envs/diff/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/kwakrhkr59/anaconda3/envs/diff/lib/python3.10/site-packages/torch/nn/modules/container.py", line 139, in forward
+    input = module(input)
+  File "/home/kwakrhkr59/anaconda3/envs/diff/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/kwakrhkr59/anaconda3/envs/diff/lib/python3.10/site-packages/torch/nn/modules/conv.py", line 457, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+  File "/home/kwakrhkr59/anaconda3/envs/diff/lib/python3.10/site-packages/torch/nn/modules/conv.py", line 453, in _conv_forward
+    return F.conv2d(input, weight, bias, self.stride,
+RuntimeError: Given groups=1, weight of size [64, 1, 7, 7], expected input[250, 3, 369, 496] to have 1 channels, but got 3 channels instead
+
