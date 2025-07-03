@@ -39,15 +39,15 @@ def ensure_dir(path):
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='Process network traffic data for feature extraction.')
-    parser.add_argument('--input-path', type=str, default="/home/kwakrhkr59/XAI_WF/defense/wtfpad/results/bigenough_tor_fiber/",
+    parser.add_argument('--input-path', type=str, default="/scratch4/starlink/WFdata75x80/firefox_fiber",
                         help='Root folder for input traffic traces. Assumes structure like input_path/label_code/instance_file.')
-    parser.add_argument('--output-path', type=str, default="/home/kwakrhkr59/XAI_WF/data",
+    parser.add_argument('--output-path', type=str, default="/home/kwakrhkr59/XAI_WF/data/nodef",
                         help='Path to save the output NPZ files.')
     parser.add_argument('--csv-path', type=str, default="/home/kwakrhkr59/starlink/filter/result.csv",
                         help='Path to the CSV file that contains average accuracy (currently unused in this script).')
     parser.add_argument('--start-site', type=int, default=0,
                         help='Starting index of the site_code to use (currently unused in this script).')
-    parser.add_argument('--classNum', type=int, default=75,
+    parser.add_argument('--classNum', type=int, default=95,
                         help='Number of classes to use (currently unused in this script).')
     parser.add_argument('--start-instance', type=int, default=0,
                         help='Starting index of instances to use per class (currently unused in this script).')
@@ -134,7 +134,7 @@ def extract_features_for_group(input_path, output_path):
         extracted_features_by_type[feature_name] = current_feature_list
 
         ensure_dir(output_path)
-        save_npz(current_feature_list, os.path.join(output_path, f"wtfpad/bigenough_{feature_name}_all.npz"))
+        save_npz(current_feature_list, os.path.join(output_path, f"firefox_fiber_{feature_name}_all.npz"))
 
     logging.info("[+] Feature extraction completed.")
 
