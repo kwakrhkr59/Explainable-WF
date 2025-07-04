@@ -39,9 +39,9 @@ def ensure_dir(path):
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='Process network traffic data for feature extraction.')
-    parser.add_argument('--input-path', type=str, default="/scratch4/starlink/WFdata75x80/firefox_fiber",
+    parser.add_argument('--input-path', type=str, default="/home/kwakrhkr59/XAI_WF/defense/wtfpad/results/firefox_fiber",
                         help='Root folder for input traffic traces. Assumes structure like input_path/label_code/instance_file.')
-    parser.add_argument('--output-path', type=str, default="/home/kwakrhkr59/XAI_WF/data/nodef",
+    parser.add_argument('--output-path', type=str, default="/home/kwakrhkr59/XAI_WF/data/wtfpad",
                         help='Path to save the output NPZ files.')
     parser.add_argument('--csv-path', type=str, default="/home/kwakrhkr59/starlink/filter/result.csv",
                         help='Path to the CSV file that contains average accuracy (currently unused in this script).')

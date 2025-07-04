@@ -74,7 +74,7 @@ def test_model(model_path, dataset_path, feature="direction", nb_classes=75, len
     
     # Extract model name for CSV path
     model_name = os.path.splitext(os.path.basename(model_path))[0]
-    csv_path = f"results/{model_name}_bigenough_nodef_wtfpad_{FEATURE}_test_accuracy.csv"
+    csv_path = f"results/{model_name}_firefox_fiber_nodef_wtfpad_{FEATURE}_test_accuracy.csv"
     df_accuracy.to_csv(csv_path, index=False)
     logger.info(f"Class-wise classification accuracy saved to {csv_path}")
 
@@ -89,12 +89,12 @@ def test_model(model_path, dataset_path, feature="direction", nb_classes=75, len
     columns = class_columns + ["predicted_class", "true_label"]
 
     df_pred = pd.DataFrame(pred_with_info, columns=columns)
-    pred_csv_path = f"results/{model_name}_bigenough_nodef_wtfpad_{FEATURE}_predictions_per_sample.csv"
+    pred_csv_path = f"results/{model_name}_firefox_fiber_nodef_wtfpad_{FEATURE}_predictions_per_sample.csv"
     df_pred.to_csv(pred_csv_path, index=False)
     logger.info(f"Prediction probabilities, predicted class, and true labels per test sample saved to {pred_csv_path}")
 
 if __name__ == "__main__":
     test_model_path = '/home/kwakrhkr59/XAI_WF/attack/df/models/DF_firefox_fiber_nodef_direction_batch128_epoch30.h5'
-    test_dataset_path = '/home/kwakrhkr59/XAI_WF/data/nodef/firefox_fiber_direction_all.npz'
+    test_dataset_path = '/home/kwakrhkr59/XAI_WF/data/wtfpad/firefox_fiber_direction_all.npz'
 
     test_model(test_model_path, test_dataset_path)

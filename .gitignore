@@ -11,6 +11,8 @@
 */models/*
 */results/*
 */output/*
+*/plots/*
+*.csv
 
 *.h5
 *.npz
