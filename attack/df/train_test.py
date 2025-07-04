@@ -25,7 +25,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 # Set random seed for reproducibility
 random.seed(0)
-os.environ["CUDA_VISIBLE_DEVICES"] = "6"
+os.environ["CUDA_VISIBLE_DEVICES"] = "7"
 
 logger.info("Training and evaluating DF model for closed-world scenario on non-defended dataset")
 
@@ -35,11 +35,11 @@ NB_CLASSES = 95
 NB_EPOCH = 50
 BATCH_SIZE = 128
 VERBOSE = 1
-LENGTH = 100
+LENGTH = 3000
 OPTIMIZER = Adamax(learning_rate=0.002, beta_1=0.9, beta_2=0.999)
 INPUT_SHAPE = (LENGTH, 1)
 DATASET = "bigenough"
-DEFENSE = "wtfpad"
+DEFENSE = "nodef"
 DATASET_DIR = f'/home/kwakrhkr59/XAI_WF/dataset/{DEFENSE}/{DATASET}_{FEATURE}_all.npz'
 
 # Load and prepare data
