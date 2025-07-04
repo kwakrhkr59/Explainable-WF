@@ -95,6 +95,6 @@ def test_model(model_path, dataset_path, feature="direction", nb_classes=75, len
 
 if __name__ == "__main__":
     test_model_path = '/home/kwakrhkr59/XAI_WF/attack/df/models/DF_firefox_fiber_nodef_direction_batch128_epoch30.h5'
-    test_dataset_path = '/home/kwakrhkr59/XAI_WF/data/wtfpad/firefox_fiber_direction_all.npz'
+    test_dataset_path = '/home/kwakrhkr59/XAI_WF/dataset/wtfpad/firefox_fiber_direction_all.npz'
 
     test_model(test_model_path, test_dataset_path)

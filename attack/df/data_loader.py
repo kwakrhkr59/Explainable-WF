@@ -12,7 +12,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-def load_raw(dataset_dir, feature=None, n=75, length=5000):
+def load_raw_split(dataset_dir, feature=None, n=75, length=5000):
     """
     지정된 디렉토리에서 원시 데이터를 로드하고 전처리합니다.
 
@@ -95,7 +95,7 @@ def load_raw(dataset_dir, feature=None, n=75, length=5000):
 
 
 # Load data for non-defended dataset for CW setting
-def load_pkl(feature, n=75):
+def load_pkl_split(feature, n=75):
 
     print("Loading non-defended dataset for closed-world scenario")
     # Point to the directory storing data
@@ -162,6 +162,28 @@ def load_npz(dataset_npz, feature=None, scenario="ff_sl", n=75, apply_scaler=Fal
     X = data['data']
     y = data['labels']
 
+    label_encoder = LabelEncoder()
+    y_encoded = label_encoder.fit_transform(y_encoded)
+
+    num_classes = len(label_encoder.classes_)
+    if n != num_classes:
+        logger.warning(f"Configured NB_CLASSES ({n}) does not match actual number of classes ({num_classes}). Using {num_classes}.")
+
+    y = to_categorical(y_encoded, num_classes=num_classes)
+
+    logger.info("Data dimensions:")
+    logger.info(f"X: X data's shape : {X_train.shape}")
+    logger.info(f"y: y data's shape : {y_train.shape}")
+
+    gc.collect()
+
+    return X, y
+
+def load_npz_split(dataset_npz, feature=None, scenario="ff_sl", n=75, apply_scaler=False):
+    data = np.load(dataset_npz)
+    X = data['data']
+    y = data['labels']
+
     X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
     X_valid, X_test, y_valid, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42, stratify=y_temp)
 
@@ -192,42 +214,4 @@ def load_npz(dataset_npz, feature=None, scenario="ff_sl", n=75, apply_scaler=Fal
     # 가비지 컬렉션
     gc.collect()
 
-    return X_train, y_train, X_valid, y_valid, X_test, y_test
-
-def load_npz_split(feature, dataset_dir, scenario="ff_sl", n=75, apply_scaler=False):
-    tr_path = os.path.join(dataset_dir, f"{scenario}_{feature}_training_56inst.npz")
-    val_path = os.path.join(dataset_dir, f"{scenario}_{feature}_valid_12inst.npz")
-    te_path = os.path.join(dataset_dir, f"{scenario}_{feature}_testing_12inst.npz")
-    
-    train = np.load(tr_path)
-    valid = np.load(val_path)
-    test = np.load(te_path)
-
-    X_train, y_train = train['data'], train['labels']
-    X_valid, y_valid = valid['data'], valid['labels']
-    X_test, y_test = test['data'], test['labels']
-
-    print(np.unique(y_test))
-    print(len(np.unique(y_test)))
-
-    encoder = LabelEncoder()
-    y_train = encoder.fit_transform(y_train)
-    y_valid = encoder.transform(y_valid)
-    y_test = encoder.transform(y_test)
-
-    # y_train = np_utils.to_categorical(y_train, len(encoder.classes_))
-    # y_valid = np_utils.to_categorical(y_valid, len(encoder.classes_))
-    # y_test = np_utils.to_categorical(y_test, len(encoder.classes_))
-
-    if apply_scaler:
-        scaler = StandardScaler().fit(X_train)
-        X_train = scaler.transform(X_train)
-        X_valid = scaler.transform(X_valid)
-        X_test = scaler.transform(X_test)
-    
-    X_train, y_train = preprocess_data(X_train, y_train, n)
-    X_valid, y_valid = preprocess_data(X_valid, y_valid, n)
-    X_test, y_test = preprocess_data(X_test, y_test, n)
-
-    print(y_train.shape, y_valid.shape, y_test.shape)
     return X_train, y_train, X_valid, y_valid, X_test, y_test
