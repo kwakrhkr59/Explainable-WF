@@ -7,12 +7,9 @@
 */data/*
 */log/*
 */history/*
-*/model/*
-*/models/*
 */results/*
 */output/*
-*/plots/*
 *.csv
 
-*.h5
+# *.h5
 *.npz
