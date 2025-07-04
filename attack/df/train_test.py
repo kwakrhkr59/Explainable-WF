@@ -31,17 +31,16 @@ logger.info("Training and evaluating DF model for closed-world scenario on non-d
 
 # Configuration
 FEATURE = "direction"
-NB_CLASSES = 95
+NB_CLASSES = 75
 NB_EPOCH = 50
 BATCH_SIZE = 128
 VERBOSE = 1
 LENGTH = 5000
 OPTIMIZER = Adamax(learning_rate=0.002, beta_1=0.9, beta_2=0.999)
 INPUT_SHAPE = (LENGTH, 1)
-# DATASET_DIR = '/home/kwakrhkr59/XAI_WF/defense/wtfpad/results/default_250626_163519'
-# DATASET_DIR = '/scratch4/starlink/WFdata75x80/firefox_fiber'
-# DATASET_DIR = '/home/kwakrhkr59/XAI_WF/defense/wtfpad/results/bigenough_bigenough'
-DATASET_DIR = '/home/kwakrhkr59/XAI_WF/data/wtfpad/bigenough_direction_all.npz'
+DATASET = "bigenough"
+DEFENSE = "wtfpad"
+DATASET_DIR = f'/home/kwakrhkr59/XAI_WF/dataset/{DEFENSE}/{DATASET}_{FEATURE}_all.npz'
 
 # Load and prepare data
 logger.info("Loading and preparing data for training and evaluating the model")
@@ -65,7 +64,7 @@ history = model.fit(
 
 # Save model
 os.makedirs("models", exist_ok=True)
-model_path = f'models/DF_bigenough_wtfpad_{FEATURE}_batch{BATCH_SIZE}_epoch{NB_EPOCH}.h5'
+model_path = f'models/DF_{DATASET}_{DEFENSE}_{FEATURE}_batch{BATCH_SIZE}_epoch{NB_EPOCH}.h5'
 model.save(model_path)
 logger.info(f"Model saved to {model_path}")
 
@@ -77,8 +76,8 @@ logger.info(f"Testing accuracy: {score_test[1]:.4f}")
 logger.info(f"Testing loss: {score_test[0]:.4f}")
 
 # Visualize results
-plot_corr(y_test, y_pred)
-plot_history(history, score_test)
+plot_corr(y_test, y_pred, save_path=f'heatmap/DF_{DATASET}_{DEFENSE}_{FEATURE}_batch{BATCH_SIZE}_epoch{NB_EPOCH}.png')
+plot_history(history, score_test, save_path=f'history/DF_{DATASET}_{DEFENSE}_{FEATURE}_batch{BATCH_SIZE}_epoch{NB_EPOCH}.png')
 
 # Save class-wise accuracy to CSV
 y_true_labels = np.argmax(y_test, axis=1)
@@ -95,7 +94,7 @@ df_accuracy = pd.DataFrame(list(class_accuracies.items()), columns=["Class", "Ac
 df_accuracy = df_accuracy.sort_values("Class")
 
 os.makedirs("results", exist_ok=True)
-csv_path = f"results/DF_bigenough_wtfpad_{FEATURE}_batch{BATCH_SIZE}_epoch{NB_EPOCH}.csv"
+csv_path = f"results/DF_{DATASET}_{DEFENSE}_{FEATURE}_batch{BATCH_SIZE}_epoch{NB_EPOCH}.csv"
 df_accuracy.to_csv(csv_path, index=False)
 logger.info(f"Class-wise classification accuracy saved to {csv_path}")
 
@@ -110,6 +109,6 @@ class_columns = [f"class_{i}_prob" for i in range(NB_CLASSES)]
 columns = class_columns + ["predicted_class", "true_label"]
 
 df_pred = pd.DataFrame(pred_with_info, columns=columns)
-pred_csv_path = f"results/DF_bigenough_wtfpad_{FEATURE}_predictions_per_sample.csv"
+pred_csv_path = f"results/DF_{DATASET}_{DEFENSE}_{FEATURE}_predictions_per_sample.csv"
 df_pred.to_csv(pred_csv_path, index=False)
 logger.info(f"Prediction probabilities, predicted class, and true labels per test sample saved to {pred_csv_path}")
